@@ -83,16 +83,17 @@ class RockPaperScissors
     {
         GenerateKey();
 
+        for (int i = 0; i < moves.Length; i++)
+        {
+            Console.WriteLine($"{i + 1} - {moves[i]}");
+        }
+
+        Console.WriteLine("0 - exit");
+        Console.WriteLine("? - help");
+
         int userMove;
         do
         {
-            for (int i = 0; i < moves.Length; i++)
-            {
-                Console.WriteLine($"{i + 1} - {moves[i]}");
-            }
-
-            Console.WriteLine("0 - exit");
-            Console.WriteLine("? - help");
             Console.Write("Enter your move: ");
             string? input = Console.ReadLine()?.Trim();
 
@@ -113,9 +114,11 @@ class RockPaperScissors
                 byte[] hmac = CalculateHmac(message);
 
                 int computerMove = RandomNumberGenerator.GetInt32(moves.Length) + 1;
-                Console.WriteLine($"Computer move: {moves[computerMove - 1]}");
 
                 Console.WriteLine($"HMAC: {BitConverter.ToString(hmac).Replace("-", "").ToLower()}");
+
+                Console.WriteLine($"Your move: {moves[userMove - 1]}");
+                Console.WriteLine($"Computer move: {moves[computerMove - 1]}");
 
                 int half = moves.Length / 2;
                 int winningMove = (userMove + half) % moves.Length;
@@ -133,13 +136,13 @@ class RockPaperScissors
                 {
                     Console.WriteLine("You lose!");
                 }
+
+                Console.WriteLine($"HMAC key: {BitConverter.ToString(key!).Replace("-", "").ToLower()}");
             }
             else
             {
                 Console.WriteLine("Invalid input. Please enter a number from the menu or '0' to exit.");
             }
-
-            Console.WriteLine($"HMAC key: {BitConverter.ToString(key!).Replace("-", "").ToLower()}");
 
         } while (true);
     }
