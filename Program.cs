@@ -110,10 +110,10 @@ class RockPaperScissors
 
             if (int.TryParse(input, out userMove) && userMove >= 1 && userMove <= moves.Length)
             {
+                int computerMove = RandomNumberGenerator.GetInt32(moves.Length) + 1;
+
                 byte[] message = Encoding.UTF8.GetBytes(moves[userMove - 1]);
                 byte[] hmac = CalculateHmac(message);
-
-                int computerMove = RandomNumberGenerator.GetInt32(moves.Length) + 1;
 
                 Console.WriteLine($"HMAC: {BitConverter.ToString(hmac).Replace("-", "").ToLower()}");
 
